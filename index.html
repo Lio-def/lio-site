@@ -2,145 +2,153 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Свастонов.gp</title>
+  <title>Lio_preritet</title>
   <style>
-    * {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: #000;
-      color: #fff;
+      background: black;
+      color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
+      height: 100%;
       overflow: hidden;
     }
+
+    .container {
+      text-align: center;
+      padding-top: 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background-image: url('https://your-avatar-link.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 20px;
+    }
+
+    .symbol {
+      width: 50px;
+      margin: 10px auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      text-shadow: 0 0 10px white;
+    }
+
+    .contact {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .icons {
+      margin-top: 20px;
+    }
+
+    .icons a {
+      display: inline-block;
+      margin: 0 10px;
+      font-size: 30px;
+      color: white;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .icons a:hover {
+      transform: scale(1.2);
+    }
+
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
       z-index: 0;
-    }
-    .container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    .symbol {
-      font-size: 60px;
-      margin-bottom: 10px;
-    }
-    h1 {
-      font-size: 28px;
-      text-shadow: 0 0 15px #fff;
-      margin-bottom: 30px;
-    }
-    .profile {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-    .avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .user-info {
-      text-align: left;
-    }
-    .user-info .nick {
-      font-weight: bold;
-      font-size: 16px;
-    }
-    .user-info .last-seen {
-      font-size: 12px;
-      color: #ccc;
-    }
-    .buttons img {
-      width: 40px;
-      margin: 10px;
-      filter: brightness(1.2);
-    }
-    .views {
-      font-size: 14px;
-      opacity: 0.7;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <canvas id="snow"></canvas>
-  <div class="container">
-    <div class="symbol">⪇</div>
-    <h1>Свастонов.gp</h1>
-    <div class="profile">
-      <img src="https://i.imgur.com/UtYzBtE.png" class="avatar" alt="avatar">
-      <div class="user-info">
-        <div class="nick">mister_bong2008.allakh</div>
-        <div class="last-seen">last seen 1 day ago</div>
-      </div>
-    </div>
-    <div class="buttons">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png" alt="Telegram">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/new-post.png" alt="Email">
-    </div>
-    <div class="views">👁 5
-    </div>
+
+<canvas id="snow"></canvas>
+
+<div class="container">
+  <div class="avatar"></div>
+  <img class="symbol" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Pentagram.svg" alt="symbol" />
+  <h1>Lio_preritet</h1>
+  <div class="contact">📧 lioprioritet703@gmail.com</div>
+  <div class="contact">✈️ <a href="https://t.me/prioritet_Lio" style="color: white;">@prioritet_Lio</a></div>
+
+  <div class="icons">
+    <a href="https://t.me/prioritet_Lio">✈️</a>
+    <a href="mailto:lioprioritet703@gmail.com">📧</a>
   </div>
-  <script>
-    const canvas = document.getElementById("snow");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const snowflakes = [];
-    function Snowflake() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.radius = Math.random() * 3 + 2;
-      this.speed = Math.random() + 0.5;
-      this.wind = Math.random() - 0.5;
+</div>
+
+<script>
+  // Snow animation
+  const canvas = document.getElementById("snow");
+  const ctx = canvas.getContext("2d");
+
+  let W = window.innerWidth;
+  let H = window.innerHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  let snowflakes = [];
+
+  for (let i = 0; i < 100; i++) {
+    snowflakes.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 4 + 1,
+      d: Math.random() * 100
+    });
+  }
+
+  let angle = 0;
+
+  function drawSnowflakes() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    for (let i = 0; i < 100; i++) {
+      let f = snowflakes[i];
+      ctx.moveTo(f.x, f.y);
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
     }
-    Snowflake.prototype.update = function () {
-      this.y += this.speed;
-      this.x += this.wind;
-      if (this.y > canvas.height) {
-        this.y = 0;
-        this.x = Math.random() * canvas.width;
+    ctx.fill();
+    update();
+  }
+
+  function update() {
+    angle += 0.01;
+    for (let i = 0; i < 100; i++) {
+      let f = snowflakes[i];
+      f.y += Math.cos(angle + f.d) + 1 + f.r / 2;
+      f.x += Math.sin(angle) * 2;
+
+      if (f.y > H) {
+        snowflakes[i] = { x: Math.random() * W, y: 0, r: f.r, d: f.d };
       }
-    };
-    Snowflake.prototype.draw = function () {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = "#fff";
-      ctx.fill();
-    };
-    function createSnowflakes(count) {
-      for (let i = 0; i < count; i++) {
-        snowflakes.push(new Snowflake());
-      }
     }
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      snowflakes.forEach((flake) => {
-        flake.update();
-        flake.draw();
-      });
-      requestAnimationFrame(animate);
-    }
-    createSnowflakes(100);
-    animate();
-  </script>
+  }
+
+  setInterval(drawSnowflakes, 33);
+
+  window.addEventListener('resize', () => {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+  });
+</script>
+
 </body>
 </html>
