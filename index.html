@@ -1,81 +1,49 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Lio_prioritet</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+<canvas id="snow"></canvas>
+<script>
+let canvas = document.getElementById("snow");
+let ctx = canvas.getContext("2d");
 
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: url('https://i.ibb.co/S76q7xz/bg-blue-anime.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #00ffff;
-      overflow-x: hidden;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let flakes = [];
+
+for (let i = 0; i < 100; i++) {
+    flakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 4 + 1,
+        d: Math.random() + 1
+    });
+}
+
+function drawFlakes() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    for (let i = 0; i < flakes.length; i++) {
+        let f = flakes[i];
+        ctx.moveTo(f.x, f.y);
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
     }
+    ctx.fill();
+    moveFlakes();
+}
 
-    .overlay {
-      background-color: rgba(0, 0, 50, 0.6);
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
+let angle = 0;
+
+function moveFlakes() {
+    angle += 0.01;
+    for (let i = 0; i < flakes.length; i++) {
+        let f = flakes[i];
+        f.y += Math.pow(f.d, 2) + 1;
+        f.x += Math.sin(angle) * 2;
+
+        if (f.y > canvas.height) {
+            flakes[i] = { x: Math.random() * canvas.width, y: 0, r: f.r, d: f.d };
+        }
     }
+}
 
-    .container {
-      position: relative;
-      z-index: 1;
-      padding: 40px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3em;
-      text-shadow: 0 0 10px #00faff;
-    }
-
-    .card {
-      background-color: rgba(0, 0, 70, 0.6);
-      border: 1px solid #00faff;
-      border-radius: 15px;
-      margin: 20px auto;
-      padding: 20px;
-      width: 90%;
-      max-width: 600px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00faff;
-    }
-
-    audio {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      z-index: 10;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="overlay"></div>
-  <div class="container">
-    <h1>Lio_prioritet</h1>
-
-    <div class="card">why do you need my biography, you don't need to know anything about me</div>
-    <div class="card">Have fun life</div>
-    <div class="card">Location: USA</div>
-    <div class="card">Contact: @prioritet_lio / lioprioritet703@gmail.com</div>
-    <div class="card">Languages: 🇷🇺 Russian, 🇺🇸 English</div>
-
-    <audio controls autoplay loop>
-      <source src="Teenwxve Uki Bacha (Slowed) (1).mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
-</body>
-</html>
+setInterval(drawFlakes, 25);
+</script>
