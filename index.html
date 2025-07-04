@@ -1,94 +1,154 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lio_preritet</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
+      height: 100%;
       overflow: hidden;
-    }.snowflake {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: white;
-  border-radius: 50%;
-  animation: fall linear infinite;
-}
+    }
 
-@keyframes fall {
-  0% {
-    transform: translateY(-10px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-}
+    .container {
+      text-align: center;
+      padding-top: 80px;
+      position: relative;
+      z-index: 1;
+    }
 
-.avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid white;
-  margin: 30px auto 10px;
-  background: url('avatar.jpg') no-repeat center/cover;
-}
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background-image: url('https://your-avatar-link.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 20px;
+    }
 
-h1 {
-  font-size: 28px;
-  margin: 10px 0;
-  text-shadow: 0 0 10px white;
-}
+    .symbol {
+      width: 50px;
+      margin: 10px auto;
+    }
 
-.contacts {
-  margin-top: 10px;
-}
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      text-shadow: 0 0 10px white;
+    }
 
-.contacts div {
-  margin: 5px;
-  font-size: 16px;
-}
+    .contact {
+      margin: 10px 0;
+      font-size: 18px;
+    }
 
-.icons {
-  margin-top: 20px;
-}
+    .icons {
+      margin-top: 20px;
+    }
 
-.icons img {
-  width: 28px;
-  height: 28px;
-  margin: 0 10px;
-  filter: brightness(0) invert(1) drop-shadow(0 0 5px white);
-}
+    .icons a {
+      display: inline-block;
+      margin: 0 10px;
+      font-size: 30px;
+      color: white;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
 
-.symbol {
-  margin-top: 15px;
-}
+    .icons a:hover {
+      transform: scale(1.2);
+    }
 
-.symbol img {
-  width: 35px;
-  filter: brightness(0) invert(1);
-}
-
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
+
+<canvas id="snow"></canvas>
+
+<div class="container">
   <div class="avatar"></div>
-  <div class="symbol">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Pentagram.svg/1024px-Pentagram.svg.png" alt="symbol">
-  </div>
+  <img class="symbol" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Pentagram.svg" alt="symbol" />
   <h1>Lio_preritet</h1>
-  <div class="contacts">
-    <div>📧 lioprioritet703@gmail.com</div>
-    <div>✈️ @prioritet_Lio</div>
-  </div>
+  <div class="contact">📧 lioprioritet703@gmail.com</div>
+  <div class="contact">✈️ <a href="https://t.me/prioritet_Lio" style="color: white;">@prioritet_Lio</a></div>
+
   <div class="icons">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/send-letter--v1.png" alt="mail">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/paper-plane.png" alt="plane">
+    <a href="https://t.me/prioritet_Lio">✈️</a>
+    <a href="mailto:lioprioritet703@gmail.com">📧</a>
   </div>
+</div>
+
+<script>
+  // Snow animation
+  const canvas = document.getElementById("snow");
+  const ctx = canvas.getContext("2d");
+
+  let W = window.innerWidth;
+  let H = window.innerHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  let snowflakes = [];
+
+  for (let i = 0; i < 100; i++) {
+    snowflakes.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 4 + 1,
+      d: Math.random() * 100
+    });
+  }
+
+  let angle = 0;
+
+  function drawSnowflakes() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    for (let i = 0; i < 100; i++) {
+      let f = snowflakes[i];
+      ctx.moveTo(f.x, f.y);
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+    }
+    ctx.fill();
+    update();
+  }
+
+  function update() {
+    angle += 0.01;
+    for (let i = 0; i < 100; i++) {
+      let f = snowflakes[i];
+      f.y += Math.cos(angle + f.d) + 1 + f.r / 2;
+      f.x += Math.sin(angle) * 2;
+
+      if (f.y > H) {
+        snowflakes[i] = { x: Math.random() * W, y: 0, r: f.r, d: f.d };
+      }
+    }
+  }
+
+  setInterval(drawSnowflakes, 33);
+
+  window.addEventListener('resize', () => {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+  });
+</script>
+
+</body>
+</html>
