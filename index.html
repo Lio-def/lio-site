@@ -2,135 +2,82 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lio_preritet</title>
+  <title>Lio_prioritet</title>
   <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
-    h1 {
-      margin-top: 20px;
-      font-size: 2.5em;
-      text-shadow: 0 0 15px white;
-    }
-    img.avatar {
-      margin-top: 40px;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 3px solid white;
-      box-shadow: 0 0 20px white;
-    }
-    p {
-      font-size: 1.2em;
-      margin: 10px 0;
-    }
-    a {
-      color: #00bfff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    #stars {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
+    body, html { margin:0; padding:0; overflow:hidden; }
+    canvas#snow {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
       z-index: -1;
     }
-    audio {
-      display: none;
+    .container {
+      position: relative;
+      z-index: 1;
+      color: #00afff;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      padding-top: 40vh;
     }
   </style>
 </head>
 <body>
-
-  <canvas id="stars"></canvas>
-
-  <!-- Аватар -->
-  <img class="avatar" src="avatar.jpg" alt="avatar" />
-
-  <!-- Никнейм -->
-  <h1>Lio_preritet</h1>
-
-  <!-- Контакты -->
-  <p>📧 <a href="mailto:lioprioritet703@gmail.com">lioprioritet703@gmail.com</a></p>
-  <p>✈️ <a href="https://t.me/prioritet_Lio" target="_blank">@prioritet_Lio</a></p>
-
-  <!-- Музыка -->
+  <canvas id="snow"></canvas>
+  <div class="container">
+    <h1>Lio_prioritet</h1>
+    <div>@prioritet_lio / lioprioritet703@gmail.com</div>
+    <div>🇷🇺 русский, 🇺🇸 english</div>
+  </div>
   <audio autoplay loop>
-    <source src="Teenwxve Uki Bacha (Slowed) (1).mp3" type="audio/mp3">
-    Your browser does not support the audio element.
+    <source src="тут_ваш_трек.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает audio.
   </audio>
 
   <script>
-    // Эффект звёздного фона
-    const canvas = document.getElementById("stars");
-    const ctx = canvas.getContext("2d");
+    let canvas = document.getElementById("snow");
+    let ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    let stars = [], count = 100;
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    let flakes = [];
+    for (let i = 0; i < 100; i++) {
+      flakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 4 + 1,
+        d: Math.random() + 1
+      });
     }
 
-    function init() {
-      stars = [];
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 2,
-          d: Math.random() + 1
-        });
-      }
-    }
-
-    function draw() {
+    let angle = 0;
+    function drawFlakes() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
-      for (let i = 0; i < count; i++) {
-        let s = stars[i];
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      move();
+      ctx.beginPath();
+      flakes.forEach(f => {
+        ctx.moveTo(f.x, f.y);
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      });
+      ctx.fill();
+      moveFlakes();
     }
 
-    function move() {
-      for (let i = 0; i < count; i++) {
-        let s = stars[i];
-        s.y += s.d;
-        if (s.y > canvas.height) {
-          s.y = 0;
-          s.x = Math.random() * canvas.width;
+    function moveFlakes() {
+      angle += 0.01;
+      flakes.forEach((f, i) => {
+        f.y += Math.pow(f.d, 2) + 1;
+        f.x += Math.sin(angle) * 2;
+        if (f.y > canvas.height) {
+          flakes[i].y = 0;
+          flakes[i].x = Math.random() * canvas.width;
         }
-      }
+      });
     }
 
-    function animate() {
-      draw();
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener("resize", () => {
-      resize();
-      init();
+    setInterval(drawFlakes, 25);
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
-
-    resize();
-    init();
-    animate();
   </script>
-
 </body>
 </html>
