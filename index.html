@@ -1,154 +1,245 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Lio_preritet</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .container {
-      text-align: center;
-      padding-top: 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 2px solid white;
-      background-image: url('https://your-avatar-link.jpg');
-      background-size: cover;
-      background-position: center;
-      margin: 0 auto 20px;
-    }
-
-    .symbol {
-      width: 50px;
-      margin: 10px auto;
-    }
-
-    h1 {
-      font-size: 32px;
-      font-weight: bold;
-      text-shadow: 0 0 10px white;
-    }
-
-    .contact {
-      margin: 10px 0;
-      font-size: 18px;
-    }
-
-    .icons {
-      margin-top: 20px;
-    }
-
-    .icons a {
-      display: inline-block;
-      margin: 0 10px;
-      font-size: 30px;
-      color: white;
-      text-decoration: none;
-      transition: transform 0.2s;
-    }
-
-    .icons a:hover {
-      transform: scale(1.2);
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .profile-card {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .username {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .status {
+            font-size: 16px;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .status i {
+            color: #4CAF50;
+            font-size: 12px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .info-label {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .last-login {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            opacity: 0.8;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 480px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 25px 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="profile-card">
+        <div class="header">
+            <h1 class="username">mister_bong2008.allakh</h1>
+            <div class="status">
+                <i class="fas fa-circle"></i>
+                <span>был(а) в сети 1 день назад</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-circle"></i>
+                    Основная информация
+                </h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Подписчики</div>
+                        <div class="info-value">1,248</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Подписки</div>
+                        <div class="info-value">367</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Публикации</div>
+                        <div class="info-value">84</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Рейтинг</div>
+                        <div class="info-value">★ 4.8</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-cog"></i>
+                    Действия
+                </h2>
+                <a href="#" class="btn">
+                    <i class="fas fa-comment"></i> Написать сообщение
+                </a>
+                <a href="#" class="btn">
+                    <i class="fas fa-user-plus"></i> Добавить в друзья
+                </a>
+            </div>
+        </div>
+        
+        <div class="last-login">
+            <i class="fas fa-clock"></i> Последний раз в сети: 4 июля 2025
+        </div>
+    </div>
 
-<canvas id="snow"></canvas>
-
-<div class="container">
-  <div class="avatar"></div>
-  <img class="symbol" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Pentagram.svg" alt="symbol" />
-  <h1>Lio_preritet</h1>
-  <div class="contact">📧 lioprioritet703@gmail.com</div>
-  <div class="contact">✈️ <a href="https://t.me/prioritet_Lio" style="color: white;">@prioritet_Lio</a></div>
-
-  <div class="icons">
-    <a href="https://t.me/prioritet_Lio">✈️</a>
-    <a href="mailto:lioprioritet703@gmail.com">📧</a>
-  </div>
-</div>
-
-<script>
-  // Snow animation
-  const canvas = document.getElementById("snow");
-  const ctx = canvas.getContext("2d");
-
-  let W = window.innerWidth;
-  let H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
-
-  let snowflakes = [];
-
-  for (let i = 0; i < 100; i++) {
-    snowflakes.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 4 + 1,
-      d: Math.random() * 100
-    });
-  }
-
-  let angle = 0;
-
-  function drawSnowflakes() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    for (let i = 0; i < 100; i++) {
-      let f = snowflakes[i];
-      ctx.moveTo(f.x, f.y);
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
-    }
-    ctx.fill();
-    update();
-  }
-
-  function update() {
-    angle += 0.01;
-    for (let i = 0; i < 100; i++) {
-      let f = snowflakes[i];
-      f.y += Math.cos(angle + f.d) + 1 + f.r / 2;
-      f.x += Math.sin(angle) * 2;
-
-      if (f.y > H) {
-        snowflakes[i] = { x: Math.random() * W, y: 0, r: f.r, d: f.d };
-      }
-    }
-  }
-
-  setInterval(drawSnowflakes, 33);
-
-  window.addEventListener('resize', () => {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = W;
-    canvas.height = H;
-  });
-</script>
-
+    <script>
+        // Обновление статуса онлайн
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusElement = document.querySelector('.status');
+            
+            function updateStatus() {
+                const lastSeenDays = 1; // дней назад
+                const statusText = lastSeenDays === 0 ? 
+                    "онлайн сейчас" : 
+                    `был(а) в сети ${lastSeenDays} ${getDayText(lastSeenDays)} назад`;
+                
+                statusElement.innerHTML = `
+                    <i class="fas fa-circle"></i>
+                    <span>${statusText}</span>
+                `;
+            }
+            
+            function getDayText(days) {
+                if (days === 1) return "день";
+                if (days >= 2 && days <= 4) return "дня";
+                return "дней";
+            }
+            
+            updateStatus();
+        });
+    </script>
 </body>
 </html>
