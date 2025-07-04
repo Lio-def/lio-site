@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Приоритет Лио | Биография</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,14 +13,15 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
+            line-height: 1.6;
         }
         
         @keyframes gradientBG {
@@ -38,122 +40,223 @@
         
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 20px 30px;
             position: relative;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 25px;
         }
         
         .avatar {
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
+            border: 5px solid rgba(255, 255, 255, 0.15);
             object-fit: cover;
-            margin: 0 auto 20px;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-            animation: pulse 3s infinite;
+            box-shadow: 0 0 30px rgba(106, 90, 205, 0.7);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
         }
         
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
-            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.9);
+        }
+        
+        .avatar-border {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            border: 2px solid #9370DB;
+            animation: rotate 8s linear infinite;
+            z-index: 1;
+        }
+        
+        .avatar-border::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 2px solid #BA55D3;
+            animation: rotateReverse 6s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes rotateReverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
         }
         
         h1 {
+            font-family: 'Orbitron', sans-serif;
             font-size: 3.5rem;
             margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            animation: textGlow 2s infinite alternate;
-        }
-        
-        @keyframes textGlow {
-            from { text-shadow: 0 0 5px #fff; }
-            to { text-shadow: 0 0 20px #fff, 0 0 30px #4d9aff; }
+            background: linear-gradient(to right, #8A2BE2, #9370DB, #BA55D3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
         }
         
         .tagline {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 30px;
             color: #e0e0ff;
             font-style: italic;
+            opacity: 0.9;
         }
         
         .contacts {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .contact-item {
             display: flex;
-            align-items: center;
-            margin: 15px 0;
-            padding: 10px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
         }
         
-        .contact-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+        .contact-card {
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px 25px;
+            min-width: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.4);
+            border-color: rgba(147, 112, 219, 0.4);
+        }
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #8A2BE2, #BA55D3);
         }
         
         .contact-icon {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #BA55D3;
         }
         
-        .contact-text {
+        .contact-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-weight: 500;
+        }
+        
+        .contact-info {
             font-size: 1.2rem;
+            font-weight: 500;
+            color: #e0e0ff;
         }
         
         .bio-section {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 30px;
-            margin: 40px auto;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            margin: 50px auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             max-width: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bio-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #8A2BE2, #BA55D3);
         }
         
         .bio-section h2 {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.2rem;
-            color: #a3d9ff;
+            color: #BA55D3;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
         
         .bio-content {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border-left: 3px solid #8A2BE2;
+            font-style: italic;
             line-height: 1.8;
-            font-size: 1.1rem;
         }
         
-        .bio-content p {
-            margin-bottom: 20px;
-            text-align: justify;
+        .quote {
+            font-size: 1.5rem;
+            color: #f8f8ff;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(186, 85, 211, 0.5);
+            position: relative;
+            padding: 0 30px;
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: #8A2BE2;
+            position: absolute;
+            opacity: 0.7;
+        }
+        
+        .quote::before {
+            top: -20px;
+            left: -10px;
+        }
+        
+        .quote::after {
+            bottom: -40px;
+            right: -10px;
         }
         
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         /* Canvas for animations */
@@ -176,13 +279,58 @@
             pointer-events: none;
         }
         
+        /* Decorative elements */
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-top: 2px solid #8A2BE2;
+            border-left: 2px solid #8A2BE2;
+        }
+        
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-top: 2px solid #8A2BE2;
+            border-right: 2px solid #8A2BE2;
+        }
+        
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-bottom: 2px solid #8A2BE2;
+            border-left: 2px solid #8A2BE2;
+        }
+        
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 2px solid #8A2BE2;
+            border-right: 2px solid #8A2BE2;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            .avatar { width: 150px; height: 150px; }
-            .tagline { font-size: 1.2rem; }
-            .contact-text { font-size: 1rem; }
-            .bio-section { padding: 20px; }
+            .avatar { width: 170px; height: 170px; }
+            .avatar-border { width: 200px; height: 200px; }
+            .tagline { font-size: 1.1rem; }
+            .contact-card { min-width: 100%; }
+            .bio-section { padding: 25px; }
+            .quote { font-size: 1.3rem; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .avatar { width: 140px; height: 140px; }
+            .avatar-border { width: 170px; height: 170px; }
+            .bio-section { padding: 20px 15px; }
+            .quote { font-size: 1.2rem; padding: 0 20px; }
         }
     </style>
 </head>
@@ -193,41 +341,48 @@
     <!-- Canvas for snow animation -->
     <canvas id="snow-canvas"></canvas>
     
+    <!-- Decorative corners -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    
     <div class="container">
         <header>
-            <img src="https://i.imgur.com/0qhjhe3.jpg" alt="Приоритет Лио" class="avatar">
-            <h1>Приоритет Лио</h1>
-            <p class="tagline">Страсть к инновациям и творчеству</p>
+            <div class="avatar-container">
+                <div class="avatar-border"></div>
+                <img src="https://i.imgur.com/0qhjhe3.jpg" alt="Приоритет Лио" class="avatar">
+            </div>
+            <h1>ПРИОРИТЕТ ЛИО</h1>
+            <p class="tagline">Цифровая эстетика и бескомпромиссный подход</p>
             
             <div class="contacts">
-                <div class="contact-item">
+                <div class="contact-card">
                     <div class="contact-icon">✉️</div>
-                    <div class="contact-text">lioprioritet703@gmail.com</div>
+                    <div class="contact-title">ЭЛЕКТРОННАЯ ПОЧТА</div>
+                    <div class="contact-info">lioprioritet703@gmail.com</div>
                 </div>
-                <div class="contact-item">
+                <div class="contact-card">
                     <div class="contact-icon">📱</div>
-                    <div class="contact-text">Telegram: @prioritet_lio</div>
+                    <div class="contact-title">TELEGRAM</div>
+                    <div class="contact-info">@prioritet_lio</div>
                 </div>
             </div>
         </header>
         
         <main>
             <section class="bio-section">
-                <h2>Моя история</h2>
+                <h2>ОБО МНЕ</h2>
                 <div class="bio-content">
-                    <p>Привет! Меня зовут Лио, и я увлечённый профессионал в области цифровых технологий и креативных решений. С детства меня привлекали сложные задачи и возможность создавать что-то новое, что может изменить мир к лучшему.</p>
-                    
-                    <p>Мой путь начался с изучения программирования и дизайна, что позволило мне развить уникальный набор навыков, сочетающих техническую экспертизу и творческое видение. Я верю, что настоящие инновации рождаются на стыке различных дисциплин.</p>
-                    
-                    <p>За последние годы я участвовал в множестве проектов, от разработки мобильных приложений до создания иммерсивных цифровых инсталляций. Каждый проект для меня - это возможность исследовать новые горизонты и расширять границы возможного.</p>
-                    
-                    <p>В свободное время я увлекаюсь фотографией, изучением новых технологий и путешествиями, которые вдохновляют меня на новые идеи и проекты. Я считаю, что постоянное обучение и развитие - ключ к успеху в современном мире.</p>
+                    <div class="quote">
+                        I don't have a hobby, well if someone touches me, I'll kill him(;
+                    </div>
                 </div>
             </section>
         </main>
         
         <footer>
-            <p>© 2023 Приоритет Лио. Все права защищены.</p>
+            <p>© 2023 ПРИОРИТЕТ ЛИО. ВСЕ ПРАВА ЗАЩИЩЕНЫ. НЕ ТРОГАТЬ.</p>
         </footer>
     </div>
     
