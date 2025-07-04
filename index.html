@@ -4,124 +4,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lio_preritet</title>
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #000;
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
       font-family: Arial, sans-serif;
-      color: white;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-    .content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       text-align: center;
-    }
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 2px solid white;
-      margin-bottom: 20px;
-      object-fit: cover;
-    }
-    .name {
-      font-size: 2em;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px white;
-    }
-    .contact {
-      font-size: 1em;
-      opacity: 0.8;
-      margin-bottom: 30px;
-    }
-    .icons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-    }
-    .icons a {
-      color: white;
-      font-size: 2em;
-      text-shadow: 0 0 10px white;
-      text-decoration: none;
-    }
-    .symbol {
-      margin: 30px 0;
-    }
-    .symbol svg {
-      width: 60px;
-      height: 60px;
-      fill: white;
-    }
+      overflow: hidden;
+    }canvas#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+img.avatar {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border: 2px solid white;
+  margin-top: 60px;
+}
+
+h1 {
+  text-shadow: 0 0 10px white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
   </style>
 </head>
 <body>
-  <canvas id="snow"></canvas>
-  <div class="content">
-    <img src="avatar.png" alt="avatar" class="avatar">
-    <div class="symbol">
-      <!-- Simple pentagram -->
-      <svg viewBox="0 0 100 100">
-        <polygon points="50,15 61,60 15,35 85,35 39,60" stroke="white" fill="none" stroke-width="2" />
-      </svg>
-    </div>
-    <div class="name">Lio_preritet</div>
-    <div class="contact">📧 lioprioritet703@gmail.com<br>✈ @prioritet_li</div>
-    <div class="icons">
-      <a href="https://t.me/prioritet_li">✈</a>
-      <a href="mailto:lioprioritet703@gmail.com">✉</a>
-    </div>
-  </div>  <script>
-    let canvas = document.getElementById("snow");
-    let ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    let flakes = [];
-    for (let i = 0; i < 100; i++) {
-      flakes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 4 + 1,
-        d: Math.random() + 1
-      });
+  <!-- Фон -->
+  <canvas id="background"></canvas>  <!-- Музыка -->  <audio autoplay loop>
+    <source src="Teenwxve Uki Bacha (Slowed) (1).mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>  <!-- Аватарка -->  <img src="your-avatar.jpg" alt="avatar" class="avatar">  <!-- Имя и контакты -->  <h1>Lio_preritet</h1>
+  <p>
+    📧 lioprioritet703@gmail.com<br>
+    ✈ <a href="https://t.me/prioritet_Lio">@prioritet_Lio</a>
+  </p>  <script>
+    // Звёздный фон
+    const canvas = document.getElementById('background');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-    function drawFlakes() {
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 2 + 1,
+          d: Math.random() * 0.5 + 0.5
+        });
+      }
+    }
+
+    function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-      ctx.beginPath();
-      for (let i = 0; i < flakes.length; i++) {
-        let f = flakes[i];
-        ctx.moveTo(f.x, f.y);
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+      ctx.fillStyle = 'white';
+      for (let i = 0; i < stars.length; i++) {
+        let s = stars[i];
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
       }
-      ctx.fill();
-      moveFlakes();
+      moveStars();
     }
-    let angle = 0;
-    function moveFlakes() {
-      angle += 0.01;
-      for (let i = 0; i < flakes.length; i++) {
-        let f = flakes[i];
-        f.y += Math.pow(f.d, 2) + 1;
-        f.x += Math.sin(angle) * 2;
-        if (f.y > canvas.height) {
-          flakes[i] = { x: Math.random() * canvas.width, y: 0, r: f.r, d: f.d };
-        }
-      }
-    }
-    setInterval(drawFlakes, 25);
-  </script></body>
-</html>
+
+    function moveStars() {
