@@ -3,242 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль пользователя</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Приоритет Лио | Биография</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .profile-card {
-            width: 100%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .header {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 30px 20px;
-            text-align: center;
             position: relative;
         }
         
-        .username {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .status {
-            font-size: 16px;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
         }
         
-        .status i {
-            color: #4CAF50;
-            font-size: 12px;
-        }
-        
-        .content {
-            padding: 30px;
-        }
-        
-        .section {
-            margin-bottom: 25px;
-        }
-        
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .info-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
-        
-        .info-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .info-label {
-            font-size: 14px;
-            opacity: 0.7;
-            margin-bottom: 5px;
-        }
-        
-        .info-value {
-            font-size: 18px;
-            font-weight: 500;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        header {
             text-align: center;
-            width: 100%;
-            margin-top: 10px;
+            padding: 40px 20px;
+            position: relative;
         }
         
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px #fff; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #4d9aff; }
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #e0e0ff;
+            font-style: italic;
+        }
+        
+        .contacts {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-3px);
         }
         
-        .btn i {
-            margin-right: 8px;
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 1.5rem;
         }
         
-        .last-login {
+        .contact-text {
+            font-size: 1.2rem;
+        }
+        
+        .bio-section {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+        }
+        
+        .bio-section h2 {
             text-align: center;
-            padding: 15px;
-            font-size: 14px;
-            opacity: 0.8;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            color: #a3d9ff;
         }
         
-        @media (max-width: 480px) {
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header {
-                padding: 25px 15px;
-            }
-            
-            .content {
-                padding: 20px;
-            }
+        .bio-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .bio-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 40px;
+        }
+        
+        /* Canvas for animations */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .avatar { width: 150px; height: 150px; }
+            .tagline { font-size: 1.2rem; }
+            .contact-text { font-size: 1rem; }
+            .bio-section { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="profile-card">
-        <div class="header">
-            <h1 class="username">mister_bong2008.allakh</h1>
-            <div class="status">
-                <i class="fas fa-circle"></i>
-                <span>был(а) в сети 1 день назад</span>
-            </div>
-        </div>
-        
-        <div class="content">
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-user-circle"></i>
-                    Основная информация
-                </h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Подписчики</div>
-                        <div class="info-value">1,248</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Подписки</div>
-                        <div class="info-value">367</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Публикации</div>
-                        <div class="info-value">84</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Рейтинг</div>
-                        <div class="info-value">★ 4.8</div>
-                    </div>
+    <!-- Canvas for animated background -->
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- Canvas for snow animation -->
+    <canvas id="snow-canvas"></canvas>
+    
+    <div class="container">
+        <header>
+            <img src="https://i.imgur.com/0qhjhe3.jpg" alt="Приоритет Лио" class="avatar">
+            <h1>Приоритет Лио</h1>
+            <p class="tagline">Страсть к инновациям и творчеству</p>
+            
+            <div class="contacts">
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-text">lioprioritet703@gmail.com</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-text">Telegram: @prioritet_lio</div>
                 </div>
             </div>
-            
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-cog"></i>
-                    Действия
-                </h2>
-                <a href="#" class="btn">
-                    <i class="fas fa-comment"></i> Написать сообщение
-                </a>
-                <a href="#" class="btn">
-                    <i class="fas fa-user-plus"></i> Добавить в друзья
-                </a>
-            </div>
-        </div>
+        </header>
         
-        <div class="last-login">
-            <i class="fas fa-clock"></i> Последний раз в сети: 4 июля 2025
-        </div>
+        <main>
+            <section class="bio-section">
+                <h2>Моя история</h2>
+                <div class="bio-content">
+                    <p>Привет! Меня зовут Лио, и я увлечённый профессионал в области цифровых технологий и креативных решений. С детства меня привлекали сложные задачи и возможность создавать что-то новое, что может изменить мир к лучшему.</p>
+                    
+                    <p>Мой путь начался с изучения программирования и дизайна, что позволило мне развить уникальный набор навыков, сочетающих техническую экспертизу и творческое видение. Я верю, что настоящие инновации рождаются на стыке различных дисциплин.</p>
+                    
+                    <p>За последние годы я участвовал в множестве проектов, от разработки мобильных приложений до создания иммерсивных цифровых инсталляций. Каждый проект для меня - это возможность исследовать новые горизонты и расширять границы возможного.</p>
+                    
+                    <p>В свободное время я увлекаюсь фотографией, изучением новых технологий и путешествиями, которые вдохновляют меня на новые идеи и проекты. Я считаю, что постоянное обучение и развитие - ключ к успеху в современном мире.</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2023 Приоритет Лио. Все права защищены.</p>
+        </footer>
     </div>
-
+    
     <script>
-        // Обновление статуса онлайн
-        document.addEventListener('DOMContentLoaded', function() {
-            const statusElement = document.querySelector('.status');
+        // Particles background animation
+        const particlesCanvas = document.getElementById('particles-canvas');
+        const particlesCtx = particlesCanvas.getContext('2d');
+        
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+        
+        const particles = [];
+        const particleCount = 150;
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * particlesCanvas.width;
+                this.y = Math.random() * particlesCanvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = `rgba(${Math.floor(Math.random() * 100 + 155)}, 
+                                ${Math.floor(Math.random() * 100 + 155)}, 
+                                ${Math.floor(Math.random() * 255)}, 
+                                ${Math.random() * 0.5 + 0.2})`;
+            }
             
-            function updateStatus() {
-                const lastSeenDays = 1; // дней назад
-                const statusText = lastSeenDays === 0 ? 
-                    "онлайн сейчас" : 
-                    `был(а) в сети ${lastSeenDays} ${getDayText(lastSeenDays)} назад`;
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
                 
-                statusElement.innerHTML = `
-                    <i class="fas fa-circle"></i>
-                    <span>${statusText}</span>
-                `;
+                if (this.x > particlesCanvas.width || this.x < 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y > particlesCanvas.height || this.y < 0) {
+                    this.speedY = -this.speedY;
+                }
             }
             
-            function getDayText(days) {
-                if (days === 1) return "день";
-                if (days >= 2 && days <= 4) return "дня";
-                return "дней";
+            draw() {
+                particlesCtx.fillStyle = this.color;
+                particlesCtx.beginPath();
+                particlesCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                particlesCtx.fill();
+            }
+        }
+        
+        function initParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
             }
             
-            updateStatus();
+            requestAnimationFrame(animateParticles);
+        }
+        
+        // Snow animation
+        const snowCanvas = document.getElementById('snow-canvas');
+        const snowCtx = snowCanvas.getContext('2d');
+        
+        snowCanvas.width = window.innerWidth;
+        snowCanvas.height = window.innerHeight;
+        
+        const snowflakes = [];
+        const snowflakeCount = 200;
+        
+        class Snowflake {
+            constructor() {
+                this.x = Math.random() * snowCanvas.width;
+                this.y = Math.random() * snowCanvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speed = Math.random() * 1 + 0.5;
+                this.wind = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            
+            update() {
+                this.y += this.speed;
+                this.x += this.wind;
+                
+                if (this.y > snowCanvas.height) {
+                    this.y = 0;
+                    this.x = Math.random() * snowCanvas.width;
+                }
+                
+                if (this.x > snowCanvas.width) {
+                    this.x = 0;
+                } else if (this.x < 0) {
+                    this.x = snowCanvas.width;
+                }
+            }
+            
+            draw() {
+                snowCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                snowCtx.beginPath();
+                snowCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                snowCtx.fill();
+            }
+        }
+        
+        function initSnow() {
+            for (let i = 0; i < snowflakeCount; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+        
+        function animateSnow() {
+            snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+            
+            for (let i = 0; i < snowflakes.length; i++) {
+                snowflakes[i].update();
+                snowflakes[i].draw();
+            }
+            
+            requestAnimationFrame(animateSnow);
+        }
+        
+        // Initialize and start animations
+        window.addEventListener('load', () => {
+            initParticles();
+            animateParticles();
+            
+            initSnow();
+            animateSnow();
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+            
+            snowCanvas.width = window.innerWidth;
+            snowCanvas.height = window.innerHeight;
         });
     </script>
 </body>
