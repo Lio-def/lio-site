@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Приоритет Лио | Биография</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,20 +15,23 @@
         
         body {
             font-family: 'Exo 2', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
             line-height: 1.6;
+            background: #0a0818;
         }
         
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        #background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/1YxHhHk.jpg') center/cover no-repeat;
+            filter: brightness(0.4) blur(2px);
+            z-index: 0;
         }
         
         .container {
@@ -35,7 +39,7 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
-            z-index: 10;
+            z-index: 20;
         }
         
         header {
@@ -62,7 +66,6 @@
             transition: all 0.4s ease;
             position: relative;
             z-index: 2;
-            /* Фолбэк на случай проблем с загрузкой */
             background: linear-gradient(45deg, #8A2BE2, #9370DB, #BA55D3);
             display: flex;
             align-items: center;
@@ -151,6 +154,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .contact-card:hover {
@@ -275,7 +279,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 5;
         }
         
         #snow-canvas {
@@ -284,7 +288,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2;
+            z-index: 10;
             pointer-events: none;
         }
         
@@ -293,6 +297,7 @@
             position: absolute;
             width: 40px;
             height: 40px;
+            z-index: 20;
         }
         
         .corner-tl {
@@ -323,6 +328,58 @@
             border-right: 2px solid #8A2BE2;
         }
         
+        /* Music player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid #8A2BE2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+        
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #8A2BE2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: #BA55D3;
+        }
+        
+        .volume-control {
+            width: 100px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .volume-level {
+            position: absolute;
+            height: 100%;
+            width: 70%;
+            background: #8A2BE2;
+            border-radius: 10px;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
@@ -332,6 +389,11 @@
             .contact-card { min-width: 100%; }
             .bio-section { padding: 25px; }
             .quote { font-size: 1.3rem; }
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -340,11 +402,17 @@
             .avatar-border { width: 170px; height: 170px; }
             .bio-section { padding: 20px 15px; }
             .quote { font-size: 1.2rem; padding: 0 20px; }
+            .volume-control {
+                width: 70px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Canvas for animated background -->
+    <!-- Background image with animation effect -->
+    <div id="background-image"></div>
+    
+    <!-- Canvas for animated particles -->
     <canvas id="particles-canvas"></canvas>
     
     <!-- Canvas for snow animation -->
@@ -356,23 +424,37 @@
     <div class="corner corner-bl"></div>
     <div class="corner corner-br"></div>
     
+    <!-- Music player -->
+    <div class="music-player">
+        <div class="music-btn" id="play-btn">
+            <i class="fas fa-play"></i>
+        </div>
+        <div class="volume-control" id="volume-control">
+            <div class="volume-level" id="volume-level"></div>
+        </div>
+    </div>
+    
+    <!-- Audio element -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    </audio>
+    
     <div class="container">
         <header>
             <div class="avatar-container">
                 <div class="avatar-border"></div>
-                <!-- Исправленная ссылка на аватарку -->
-                <img src="https://i.imgur.com/0qhjhe3.jpg" alt="Приоритет Лио" class="avatar" onerror="this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22200%22 height%3D%22200%22 viewBox%3D%220 0 200 200%22%3E%3Crect width%3D%22200%22 height%3D%22200%22 fill%3D%22%23333%22%2F%3E%3Ctext x%3D%2250%25%22 y%3D%2250%25%22 font-family%3D%22Arial%22 font-size%3D%2220%22 text-anchor%3D%22middle%22 dominant-baseline%3D%22middle%22 fill%3D%22white%22%3E%D0%90%D0%B2%D0%B0%D1%82%D0%B0%D1%80%D0%BA%D0%B0%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                <img src="https://i.imgur.com/0qhjhe3.jpg" alt="Приоритет Лио" class="avatar">
             </div>
             <h1>ПРИОРИТЕТ ЛИО</h1>
             <p class="tagline">Цифровая эстетика и бескомпромиссный подход</p>
             
             <div class="contacts">
-                <div class="contact-card">
+                <div class="contact-card" id="email-card">
                     <div class="contact-icon">✉️</div>
                     <div class="contact-title">ЭЛЕКТРОННАЯ ПОЧТА</div>
                     <div class="contact-info">lioprioritet703@gmail.com</div>
                 </div>
-                <div class="contact-card">
+                <div class="contact-card" id="telegram-card">
                     <div class="contact-icon">📱</div>
                     <div class="contact-title">TELEGRAM</div>
                     <div class="contact-info">@prioritet_lio</div>
@@ -518,23 +600,47 @@
             requestAnimationFrame(animateSnow);
         }
         
-        // Initialize and start animations
-        window.addEventListener('load', () => {
-            initParticles();
-            animateParticles();
-            
-            initSnow();
-            animateSnow();
+        // Music player functionality
+        const audio = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-btn');
+        const volumeControl = document.getElementById('volume-control');
+        const volumeLevel = document.getElementById('volume-level');
+        
+        let isPlaying = false;
+        
+        // Set initial volume to 50%
+        audio.volume = 0.5;
+        
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audio.play().catch(e => console.log("Autoplay blocked:", e));
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
         });
         
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            particlesCanvas.width = window.innerWidth;
-            particlesCanvas.height = window.innerHeight;
+        // Volume control
+        volumeControl.addEventListener('click', (e) => {
+            const rect = volumeControl.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            const volume = Math.max(0, Math.min(1, percent));
             
-            snowCanvas.width = window.innerWidth;
-            snowCanvas.height = window.innerHeight;
+            audio.volume = volume;
+            volumeLevel.style.width = `${volume * 100}%`;
         });
-    </script>
-</body>
-</html> 
+        
+        // Contact card functionality
+        document.getElementById('email-card').addEventListener('click', () => {
+            window.location.href = 'mailto:lioprioritet703@gmail.com';
+        });
+        
+        document.getElementById('telegram-card').addEventListener('click', () => {
+            window.open('https://t.me/prioritet_lio', '_blank');
+        });
+        
+        // Initialize and start animations
+        window.addEventListener('load', () => {
+      
