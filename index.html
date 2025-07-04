@@ -1,80 +1,136 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lio_preritet</title>
   <style>
     body {
       margin: 0;
-      background-color: black;
+      background: black;
       color: white;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       text-align: center;
       overflow: hidden;
-    }canvas#background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-<img src="avatar.jpg" alt="аватар" width="120" style="border-radius: 50%;" /> {
-  
-}
-
-h1 {
-  text-shadow: 0 0 10px white;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+      text-shadow: 0 0 15px white;
+    }
+    img.avatar {
+      margin-top: 40px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 20px white;
+    }
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    a {
+      color: #00bfff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    #stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: -1;
+    }
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <!-- Фон -->
-  <canvas id="background"></canvas>  <!-- Музыка -->  <audio autoplay loop>
-    <source src="Teenwxve Uki Bacha (Slowed) (1).mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>  <!-- Аватарка -->  <img src="your-avatar.jpg" alt="avatar" class="avatar">  <!-- Имя и контакты -->  <h1>Lio_preritet</h1>
-  <p>
-    📧 lioprioritet703@gmail.com<br>
-    ✈ <a href="https://t.me/prioritet_Lio">@prioritet_Lio</a>
-  </p>  <script>
-    // Звёздный фон
-    const canvas = document.getElementById('background');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
 
-    function resizeCanvas() {
+  <canvas id="stars"></canvas>
+
+  <!-- Аватар -->
+  <img class="avatar" src="avatar.jpg" alt="avatar" />
+
+  <!-- Никнейм -->
+  <h1>Lio_preritet</h1>
+
+  <!-- Контакты -->
+  <p>📧 <a href="mailto:lioprioritet703@gmail.com">lioprioritet703@gmail.com</a></p>
+  <p>✈️ <a href="https://t.me/prioritet_Lio" target="_blank">@prioritet_Lio</a></p>
+
+  <!-- Музыка -->
+  <audio autoplay loop>
+    <source src="Teenwxve Uki Bacha (Slowed) (1).mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Эффект звёздного фона
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+
+    let stars = [], count = 100;
+
+    function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
 
-    function createStars(count) {
+    function init() {
       stars = [];
       for (let i = 0; i < count; i++) {
         stars.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          r: Math.random() * 2 + 1,
-          d: Math.random() * 0.5 + 0.5
+          r: Math.random() * 2,
+          d: Math.random() + 1
         });
       }
     }
 
-    function drawStars() {
+    function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      for (let i = 0; i < stars.length; i++) {
+      ctx.fillStyle = "white";
+      for (let i = 0; i < count; i++) {
         let s = stars[i];
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fill();
       }
-      moveStars();
+      move();
     }
 
-    function moveStars() {
+    function move() {
+      for (let i = 0; i < count; i++) {
+        let s = stars[i];
+        s.y += s.d;
+        if (s.y > canvas.height) {
+          s.y = 0;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function animate() {
+      draw();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", () => {
+      resize();
+      init();
+    });
+
+    resize();
+    init();
+    animate();
+  </script>
+
+</body>
+</html>
