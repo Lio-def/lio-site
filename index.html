@@ -1,49 +1,80 @@
-<canvas id="snow"></canvas>
-<script>
-let canvas = document.getElementById("snow");
-let ctx = canvas.getContext("2d");
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Снежный сайт</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    h1 {
+      color: white;
+      text-align: center;
+      margin-top: 30vh;
+      font-size: 48px;
+      font-family: sans-serif;
+      text-shadow: 0 0 15px white;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="snow"></canvas>
+  <h1>Lio_prioritet</h1>
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+  <script>
+    let canvas = document.getElementById("snow");
+    let ctx = canvas.getContext("2d");
 
-let flakes = [];
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-for (let i = 0; i < 100; i++) {
-    flakes.push({
+    let flakes = [];
+    for (let i = 0; i < 100; i++) {
+      flakes.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         r: Math.random() * 4 + 1,
         d: Math.random() + 1
-    });
-}
+      });
+    }
 
-function drawFlakes() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    for (let i = 0; i < flakes.length; i++) {
+    let angle = 0;
+
+    function drawFlakes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let i = 0; i < flakes.length; i++) {
         let f = flakes[i];
         ctx.moveTo(f.x, f.y);
         ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+      }
+      ctx.fill();
+      moveFlakes();
     }
-    ctx.fill();
-    moveFlakes();
-}
 
-let angle = 0;
-
-function moveFlakes() {
-    angle += 0.01;
-    for (let i = 0; i < flakes.length; i++) {
+    function moveFlakes() {
+      angle += 0.01;
+      for (let i = 0; i < flakes.length; i++) {
         let f = flakes[i];
         f.y += Math.pow(f.d, 2) + 1;
         f.x += Math.sin(angle) * 2;
 
         if (f.y > canvas.height) {
-            flakes[i] = { x: Math.random() * canvas.width, y: 0, r: f.r, d: f.d };
+          flakes[i] = { x: Math.random() * canvas.width, y: 0, r: f.r, d: f.d };
         }
+      }
     }
-}
 
-setInterval(drawFlakes, 25);
-</script>
+    setInterval(drawFlakes, 25);
+  </script>
+</body>
+</html>
