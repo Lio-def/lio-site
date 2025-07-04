@@ -1,83 +1,86 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lio_prioritet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lio_preritet</title>
   <style>
-    body, html { margin:0; padding:0; overflow:hidden; }
-    canvas#snow {
-      position: fixed; top:0; left:0;
-      width:100%; height:100%;
-      z-index: -1;
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, sans-serif;
+      color: white;
     }
-    .container {
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .content {
       position: relative;
-      z-index: 1;
-      color: #00afff;
-      font-family: 'Orbitron', sans-serif;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      padding-top: 40vh;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+    .name {
+      font-size: 2em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px white;
+    }
+    .contact {
+      font-size: 1em;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+    .icons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+    .icons a {
+      color: white;
+      font-size: 2em;
+      text-shadow: 0 0 10px white;
+      text-decoration: none;
+    }
+    .symbol {
+      margin: 30px 0;
+    }
+    .symbol svg {
+      width: 60px;
+      height: 60px;
+      fill: white;
     }
   </style>
 </head>
 <body>
   <canvas id="snow"></canvas>
-  <div class="container">
-    <h1>Lio_prioritet</h1>
-    <div>@prioritet_lio / lioprioritet703@gmail.com</div>
-    <div>🇷🇺 русский, 🇺🇸 english</div>
-  </div>
-  <audio autoplay loop>
-    <source src="тут_ваш_трек.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает audio.
-  </audio>
-
-  <script>
-    let canvas = document.getElementById("snow");
-    let ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let flakes = [];
-    for (let i = 0; i < 100; i++) {
-      flakes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 4 + 1,
-        d: Math.random() + 1
-      });
-    }
-
-    let angle = 0;
-    function drawFlakes() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-      ctx.beginPath();
-      flakes.forEach(f => {
-        ctx.moveTo(f.x, f.y);
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-      });
-      ctx.fill();
-      moveFlakes();
-    }
-
-    function moveFlakes() {
-      angle += 0.01;
-      flakes.forEach((f, i) => {
-        f.y += Math.pow(f.d, 2) + 1;
-        f.x += Math.sin(angle) * 2;
-        if (f.y > canvas.height) {
-          flakes[i].y = 0;
-          flakes[i].x = Math.random() * canvas.width;
-        }
-      });
-    }
-
-    setInterval(drawFlakes, 25);
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  </script>
-</body>
-</html>
+  <div class="content">
+    <img src="avatar.png" alt="avatar" class="avatar">
+    <div class="symbol">
+      <!-- Simple pentagram -->
+      <svg viewBox="0 0 100 100">
+        <polygon points="50,15 61,60 15,35 85,35 39,60" stroke="white" fill="none" stroke-width="2" />
+      </svg>
+    </div>
+    <div class="name">Lio_preritet</div>
+    <div class="contact">📧 lioprioritet703@gmail.com<br>✈ @prioritet_li</div>
+    <div class="icons">
+      <a href="https://t.me/prioritet_li">✈</a>
+      <a href="mailto:lioprioritet703@gmail.com">✉</a>
+    </div
