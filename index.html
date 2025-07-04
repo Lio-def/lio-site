@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Снежный сайт</title>
+  <meta charset="UTF-8">
+  <title>Lio_prioritet</title>
   <style>
-    body {
-      margin: 0;
-      background-color: black;
-      overflow: hidden;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
+    body, html { margin:0; padding:0; overflow:hidden; }
+    canvas#snow {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
       z-index: -1;
     }
-    h1 {
-      color: white;
+    .container {
+      position: relative;
+      z-index: 1;
+      color: #00afff;
+      font-family: 'Orbitron', sans-serif;
       text-align: center;
-      margin-top: 30vh;
-      font-size: 48px;
-      font-family: sans-serif;
-      text-shadow: 0 0 15px white;
+      padding-top: 40vh;
     }
   </style>
 </head>
 <body>
   <canvas id="snow"></canvas>
-  <h1>Lio_prioritet</h1>
+  <div class="container">
+    <h1>Lio_prioritet</h1>
+    <div>@prioritet_lio / lioprioritet703@gmail.com</div>
+    <div>🇷🇺 русский, 🇺🇸 english</div>
+  </div>
+  <audio autoplay loop>
+    <source src="тут_ваш_трек.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает audio.
+  </audio>
 
   <script>
     let canvas = document.getElementById("snow");
     let ctx = canvas.getContext("2d");
-
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -47,34 +49,35 @@
     }
 
     let angle = 0;
-
     function drawFlakes() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
       ctx.beginPath();
-      for (let i = 0; i < flakes.length; i++) {
-        let f = flakes[i];
+      flakes.forEach(f => {
         ctx.moveTo(f.x, f.y);
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
-      }
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      });
       ctx.fill();
       moveFlakes();
     }
 
     function moveFlakes() {
       angle += 0.01;
-      for (let i = 0; i < flakes.length; i++) {
-        let f = flakes[i];
+      flakes.forEach((f, i) => {
         f.y += Math.pow(f.d, 2) + 1;
         f.x += Math.sin(angle) * 2;
-
         if (f.y > canvas.height) {
-          flakes[i] = { x: Math.random() * canvas.width, y: 0, r: f.r, d: f.d };
+          flakes[i].y = 0;
+          flakes[i].x = Math.random() * canvas.width;
         }
-      }
+      });
     }
 
     setInterval(drawFlakes, 25);
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>
